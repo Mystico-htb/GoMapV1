@@ -1,3 +1,16 @@
+/*
+TerminalJockey/MrBreadcrumbs here to wish everyone a wonderful New Year as we Y33T 2019 into the sun!
+This tool was written in the spirit of learning, and partially because I have seen a lot of talk about 
+offensive security tools being dangerous and some people calling for a need to limit their distribution.
+As someone working in security research, the lack of free and open source tools would severely handicap
+my work, UNLESS I COULD WRITE MY OWN. So this is my attempt at doing so. Picked up go a few days ago and
+with a healthy(ish) dose of caffeine here we are. I plan on adding implementation for threading and possibly
+a rudimentary version scan a la nmap -sV. Go has been a dream to learn so expect more goodies soon. 
+may get a blog post going of what I researched to learn to write this so anyone with a bit of time and 
+dedication can start writing their own tools as well!
+*/
+
+
 package main
 
 import (
@@ -13,7 +26,7 @@ import (
 // gets port from -p flag
 var port = flag.String("p", "80", "enter ports ie. 80,443,8000-8080")
 // gets taget ip from -t flag
-var target = flag.String("t", "127.0.0.1", "target ip address")
+var target = flag.String("t", "127.0.0.1", "target ip address / url")
 
 /* ensure proper usage by checking for number of flags, go makes this easy
  by having some default sanity checks for proper flags included */
@@ -31,7 +44,6 @@ func flagSanity() bool {
 func cleanWhiteSpace(port string) []string {
   //strips whitespace for better formatting in array
   port = strings.Replace(port, " ", "", -1)
-  //fmt.Println(*port)
   //splits into array for port number handling
   commaSeparated := strings.Split(port, ",")
   return commaSeparated
@@ -118,7 +130,5 @@ func main () {
     commaSeparated := cleanWhiteSpace(*port)
     portRange := pullRanges(commaSeparated)
     loopPorts(*target, portRange)
-    //testConnection(*target, *port)
-
   }
 }
